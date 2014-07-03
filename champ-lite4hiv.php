@@ -11,3 +11,10 @@ Author: Miquel Brazil
 Version: 0.0.2
 Author URI: http://wone.co
 */
+
+require_once 'lib/vendor/zend/ZendPdf/vendor/autoload.php';
+
+use ZendPdf\PdfDocument;
+
+$pdf = new PdfDocument();
+var_dump($pdf);
