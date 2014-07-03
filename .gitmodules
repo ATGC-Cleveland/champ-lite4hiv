@@ -1,0 +1,3 @@
+[submodule "lib/vendor/zend/ZendPdf"]
+	path = lib/vendor/zend/ZendPdf
+	url = https://github.com/zendframework/ZendPdf.git
