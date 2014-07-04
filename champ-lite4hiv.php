@@ -16,5 +16,5 @@ require_once 'lib/vendor/zend/ZendPdf/vendor/autoload.php';
 
 use ZendPdf\PdfDocument;
 
-$pdf = new PdfDocument();
-var_dump($pdf);
+//$pdf = PdfDocument::load('/Users/thingwone/Sites/healthspotohio/wp-content/plugins/champ-lite4hiv/docs/test.pdf');
+//var_dump($pdf);
