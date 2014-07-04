@@ -14,7 +14,10 @@ Author URI: http://wone.co
 
 require_once 'lib/vendor/zend/ZendPdf/vendor/autoload.php';
 
-use ZendPdf\PdfDocument;
+//use ZendPdf\PdfDocument;
 
 //$pdf = PdfDocument::load('/Users/thingwone/Sites/healthspotohio/wp-content/plugins/champ-lite4hiv/docs/test.pdf');
 //var_dump($pdf);
+
+
+?>
