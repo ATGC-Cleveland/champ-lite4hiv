@@ -1,14 +1,14 @@
 <?php
 /**
- * @package CHAMP LITE4HIV
- * @version 0.0.2
+ * @package PIRAS.5
+ * @version 0.0.5
  */
 /*
-Plugin Name: CHAMP LITE4HIV
+Plugin Name: PIRAS.5
 Plugin URI: http://healthspotohio.org/technology
-Description: Client Health Activity Management Platform - Lightweight Information Transcription Environment for HIV Testing. Plugin for accessing ATGC-specific, HIV testing information from Formstack and converting it to ODH/CDC compatible EvaluationWeb documentation
+Description: Program Information Repository & Analysis System 5. Plugin for accessing ATGC-specific, HIV testing information from Formstack and converting it to ODH/CDC compatible EvaluationWeb documentation
 Author: Miquel Brazil
-Version: 0.0.2
+Version: 0.0.5
 Author URI: http://wone.co
 */
 
