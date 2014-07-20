@@ -12,7 +12,9 @@ Version: 0.0.2
 Author URI: http://wone.co
 */
 
-require_once 'lib/vendor/ZendPdf/vendor/autoload.php';
+require_once( 'lib/vendor/ZendPdf/vendor/autoload.php' );
+require_once( 'lib/TW.Formstack.class.php' );
+require_once( 'lib/HSO.Chart.class.php' );
 
 //use ZendPdf\PdfDocument;
 
