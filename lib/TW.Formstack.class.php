@@ -14,7 +14,7 @@ class TW_Formstack {
 	const TOKEN_EP = '/oauth2/token';
 	//const TOKEN_URL = self::SERVICE_URL . self::TOKEN_EP;
 
-	const API_KEY = '9ccf6be19190d7be763a38a1cab74f6c';
+	const API_KEY = '219b6adc6faa59ad78add7e9dd904eef';
 	
 	/**
      * Makes a call to the Formstack API and returns a JSON array object.
@@ -28,13 +28,15 @@ class TW_Formstack {
 	
 		//var_dump( $res );
 		
-		$res = 1;
+		$res = '';
 		
 		if ( empty( $res ) ) {
 			
 			$res = curl_init( self::API_URL . implode( $object , '/' ) . '.json' . '?' . http_build_query( $params ) );
 			curl_setopt($res, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($res, CURLOPT_HTTPHEADER, array( 'Authorization: Bearer ' . self::API_KEY ) );
+			
+			//var_dump( $res );
 			
 			$data = json_decode( curl_exec( $res ) );
 			
