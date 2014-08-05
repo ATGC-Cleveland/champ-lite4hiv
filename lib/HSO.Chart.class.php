@@ -148,7 +148,8 @@ class HSO_Chart {
 			'no_result_a',
 			'behavioral_risk_profile',
 			'behavioral_risk_sexual_partners',
-			'behavioral_risk_b',
+			'msm_partner',
+			'male_partners',
 			'behavioral_risk_c',
 			'behavioral_risk_d',
 			'behavioral_risk_e',
@@ -172,13 +173,13 @@ class HSO_Chart {
 			
 			if ( method_exists( $this , 'draw_data_point_' . $data ) ) {
 				
-				echo '<br /> Renderer is defined';
+				//echo '<br /> Renderer is defined';
 				
 				$chart = call_user_func_array( array( $this , 'draw_data_point_' . $data ) , array( $record , $chart ) );
 				
 			} else {
 				
-				echo '<br /> Renderer is not defined';
+				//echo '<br /> Renderer is not defined';
 			}
 			
 			
@@ -191,7 +192,7 @@ class HSO_Chart {
 		
 		$dir = wp_upload_dir();
 
-		$chart->save( $dir['basedir'] . '/pdf/' . $record->data->{'25165815'}->value . '-' . $record->data->{'25165816'}->value . '.pdf' );
+		//$chart->save( $dir['basedir'] . '/pdf/' . $record->data->{'25165815'}->value . '-' . $record->data->{'25165816'}->value . '.pdf' );
 	}
 	
 	private function load_chart_template() {
@@ -915,6 +916,192 @@ class HSO_Chart {
 		
 		return $pdf;
 	}
+	
+	private function draw_data_point_male_partners ( $record , $pdf ) {
+		
+		$ew_form = $pdf->pages[0];
+		
+		if ( $this->has_male_partners( $record ) ) {
+			
+			echo '<p>Client has male partners.</p>';
+			
+			$bio_sex = $this->get_client_biological_sex( $record );
+			
+			if ( $bio_sex == 'male' ) {
+				
+				if ( $this->valid_dqm( '25169405' , $record ) ) {
+					
+					$sexual_behaviors = $record->data->{'25169406'}->value;
+			
+					if ( is_string( $sexual_behaviors ) ) {
+				
+						// run through function
+				
+					} elseif ( is_array( $sexual_behaviors ) ) {
+				
+						// run through function
+					}	
+				}
+				
+			} elseif ( $bio_sex == 'female' ) {
+				
+				
+			} elseif ( $bio_sex == 'intersex' ) {
+				
+				
+			}
+			
+		} else {
+			
+			echo '<p>Client <b>DOES NOT</b> have male partners.</p>';
+		}
+		
+		// determine if client has male partners regardless of sex/gender
+		// if they don't have male partners it's pointless to run these functions
+		// if client has male partners, determine their sex to find which data points to examine
+		
+		
+		
+		return $pdf;
+	}
+	
+	private function draw_data_point_female_partners ( $record , $pdf ) {
+		
+		return $pdf;
+	}
+	
+	private function draw_data_point_transgender_partners ( $record , $pdf ) {
+		
+		return $pdf;
+	}
+	
+	private function draw_data_point_msm_partner( $record , $pdf ) {
+		
+		$ew_form = $pdf->pages[0];
+			
+		if ( property_exists( $record->data , '25201561' ) ) {
+			
+			if ( $record->data->{'25201561'}->value == '1' ) {
+				
+				switch ( $record->data->{'25201575'}->value ) {
+					
+					case 0:
+						$ew_form->drawEllipse( 445.5 , 169.75 , 459.5 , 175.75 );
+						break;
+					
+					case 1:
+						$ew_form->drawEllipse( 493.5 , 169.75 , 507.5 , 175.75 );
+						break;
+				}
+			}
+		}
+		
+		return $pdf;
+	}
+	
+	
+	private function has_male_partners ( $record ) {
+		
+		if ( $this->valid_dqm( '25169394' , $record ) ) {
+			
+			$sexual_partners = $record->data->{'25169384'}->value;
+			
+			if ( is_string( $sexual_partners ) ) {
+				
+				if ( $sexual_partners != '1' ) {
+					
+					return false;
+				}
+				
+			} elseif ( is_array( $sexual_partners ) ) {
+				
+				if ( !in_array( '1' , $sexual_partners ) ) {
+					
+					return false;
+				}
+			}
+			
+		} else {
+			
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	private function get_client_biological_sex ( $record ) {
+		
+		if ( $this->valid_dqm( '25169084' , $record ) ) {
+			
+			switch ( $record->data->{'25169070'}->value ) {
+				
+				case '1':
+					$bio_sex = 'male';
+					break;
+					
+				case '2':
+					$bio_sex = 'female';
+					break;
+				
+				case '3';
+					$bio_sex = 'intersex';
+					break;
+			}
+			
+		} else {
+			
+			$bio_sex = false;
+		}
+		
+		return $bio_sex;
+	}
+	
+	
+	private function valid_dqm ( $dqm_id , $record ) {
+		
+		if ( property_exists( $record->data , $dqm_id ) ) {
+			
+			$dqm = $record->data->$dqm_id->value;
+			
+			if ( $dqm != '1' ) {
+				
+				return false;
+			}
+			
+		} else {
+			
+			return false;
+			
+		}
+			
+		return true;
+	}
+	
+	
+	private function draw_sexual_behaviors ( $sexual_behaviors , $pdf ) {
+		
+		if ( is_string( $sexual_behaviors ) ) {
+			
+			$list_sexual_behaviors = array( '2' , '2a' , '2b' , '3' , '3a' , '3b' );
+			
+			if ( in_array( $sexual_behaviors , $list_sexual_behaviors ) ) {
+				
+				echo 'Client HAS had Vaginal or Anal sex with a Male<br />';
+				
+			} else {
+				
+				echo 'Client HAS NOT had Vaginal or Anal sex with a Male<br />';
+			}
+			
+		} elseif ( is_array( $sexual_behaviors  ) ) {
+			
+			
+		}
+		
+		return $pdf;
+	}
+	
 	
 	public function save ( $pdf ) {
 		

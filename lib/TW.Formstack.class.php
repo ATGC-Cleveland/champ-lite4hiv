@@ -28,7 +28,7 @@ class TW_Formstack {
 	
 		//var_dump( $res );
 		
-		$res = '';
+		$res = '1';
 		
 		if ( empty( $res ) ) {
 			
@@ -51,7 +51,7 @@ class TW_Formstack {
 			
 			$dir = wp_upload_dir();
 			
-			$data = json_decode( file_get_contents( $dir['basedir'] . '/pdf/data.json' ) );
+			$data = json_decode( file_get_contents( $dir['basedir'] . '/pdf/hso-data.json' ) );
 		}
 		
 		//var_dump( curl_getinfo( $res ) );
